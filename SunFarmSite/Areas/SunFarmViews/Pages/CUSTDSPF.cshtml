@@ -192,14 +192,25 @@
             return 'red';
         });
 
+        // chart.data = [
+        //     {
+        //         category: 'Total Sales',
+        //         amount: @Model.SALESREC.SFSALES
+        //     },
+        //     {
+        //         category: 'Total Returns',
+        //         amount: @Model.SALESREC.SFRETURNS
+        //     }
+        // ];
+
         chart.data = [
             {
-                category: 'Total Sales',
-                amount: @Model.SALESREC.SFSALES
+                category: 'Sales',
+                amount: @Model.SALESREC.ChartSales
             },
             {
-                category: 'Total Returns',
-                amount: @Model.SALESREC.SFRETURNS
+                category: 'Returns',
+                amount: @Model.SALESREC.ChartRetuns
             }
         ];
    }

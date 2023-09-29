@@ -29,11 +29,10 @@ namespace ACME.SunFarm.SunFarmViews
         {
             base.OnCopyDspFileToBrowser();
 
-            if ( SALESREC.IsActive )
-            {
-                var jorge = 0;
-            }
+            if (SALESREC.IsActive && SALESREC.SFL_SalesReturns.Count > 0)
+                SALESREC.PopulateChartData();
         }
+
 
         public CUSTDSPF()
         {
@@ -187,19 +186,39 @@ namespace ACME.SunFarm.SunFarmViews
             [Dec(13, 2)]
             public decimal SFRETURNS { get; private set; }
 
+            public decimal ChartYear { get; set; }
+            public decimal[] ChartSales { get; set; } = new decimal[12];
+            public decimal[] ChartRetuns { get; set; } = new decimal[12];
+
             public class SFL_SalesReturns_Model: SubfileRecordModel
             {
                 [Dec(4, 0)]
-                public decimal Year { get; private set; }
+                public decimal YEAR { get; private set; }
 
                 [Char(3)]
-                public string Month { get; set; }
+                public string MONTH { get; set; }
 
                 [Dec(11, 2)]
-                public decimal Sales { get; private set; }
+                public decimal SALES { get; private set; }
 
                 [Dec(11, 2)]
-                public decimal Returns { get; private set; }
+                public decimal RETURNS { get; private set; }
+            }
+
+            public void PopulateChartData()
+            {
+                if (SFL_SalesReturns.Count == 0)
+                    return;
+
+                ChartYear = SFL_SalesReturns[0].YEAR;
+
+                for( int i =0; i < SFL_SalesReturns.Count; i++ )
+                {
+                    ChartSales[i] = SFL_SalesReturns[i].SALES;
+                    ChartRetuns[i] = Math.Abs( SFL_SalesReturns[i].RETURNS );
+                }
+
+                var jorge = 0;
             }
         }
 
