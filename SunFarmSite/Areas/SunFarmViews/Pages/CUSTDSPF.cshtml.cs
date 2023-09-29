@@ -186,9 +186,11 @@ namespace ACME.SunFarm.SunFarmViews
             [Dec(13, 2)]
             public decimal SFRETURNS { get; private set; }
 
-            public decimal ChartYear { get; set; }
-            public decimal[] ChartSales { get; set; } = new decimal[12];
-            public decimal[] ChartRetuns { get; set; } = new decimal[12];
+            private decimal ChartYear { get; set; }
+            private decimal[] ChartSales { get; set; } = new decimal[12];
+            private decimal[] ChartRetuns { get; set; } = new decimal[12];
+
+            public string SalesReturnsChartData { get; private set; } = "[]";
 
             public class SFL_SalesReturns_Model: SubfileRecordModel
             {
@@ -218,7 +220,30 @@ namespace ACME.SunFarm.SunFarmViews
                     ChartRetuns[i] = Math.Abs( SFL_SalesReturns[i].RETURNS );
                 }
 
-                var jorge = 0;
+                SalesReturnsChartData = "[";
+
+                SalesReturnsChartData += GetSalesDataSeries() + ",";
+                SalesReturnsChartData += GetReturnsDataSeries() + 
+
+                "]";
+            }
+
+            private string GetSalesDataSeries()
+            {
+                string result = "{";
+
+                result += $"category: \"Sales\", amount: 100.0";
+
+                return result + "}";
+            }
+
+            private string GetReturnsDataSeries()
+            {
+                string result = "{";
+
+                result += $"category: \"Returns\", amount: 50.0";
+
+                return result + "}";
             }
         }
 
