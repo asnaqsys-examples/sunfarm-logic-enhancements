@@ -25,6 +25,16 @@ namespace ACME.SunFarm.SunFarmViews
         public KEYS_Model KEYS { get; set; }
         public MSGSFC_Model MSGSFC { get; set; }
 
+        protected override void OnCopyDspFileToBrowser()
+        {
+            base.OnCopyDspFileToBrowser();
+
+            if ( SALESREC.IsActive )
+            {
+                var jorge = 0;
+            }
+        }
+
         public CUSTDSPF()
         {
             SFLC = new SFLC_Model();
@@ -70,7 +80,6 @@ namespace ACME.SunFarm.SunFarmViews
                 public string SFCSZ { get; private set; } // CITY-STATE-ZIP
 
             }
-
         }
 
         [
@@ -151,12 +160,18 @@ namespace ACME.SunFarm.SunFarmViews
         }
 
         [
-            Record(FunctionKeys = "F12 12",
+            SubfileControl(ClearRecords: "90",
+                DisplayFields = "!90",
+                DisplayRecords = "!90",
+                Size = 12,
+                IsExpandable = false,
                 EraseFormats = "CUSTREC , KEYS , SFLC"
             )
         ]
-        public class SALESREC_Model : RecordModel
+        public class SALESREC_Model : SubfileControlModel
         {
+            public List<SFL_SalesReturns_Model> SFL_SalesReturns { get; set; } = new List<SFL_SalesReturns_Model>();
+
             [Char(10)]
             public string SCPGM { get; private set; }
 
@@ -172,10 +187,24 @@ namespace ACME.SunFarm.SunFarmViews
             [Dec(13, 2)]
             public decimal SFRETURNS { get; private set; }
 
+            public class SFL_SalesReturns_Model: SubfileRecordModel
+            {
+                [Dec(4, 0)]
+                public decimal Year { get; private set; }
+
+                [Char(3)]
+                public string Month { get; set; }
+
+                [Dec(11, 2)]
+                public decimal Sales { get; private set; }
+
+                [Dec(11, 2)]
+                public decimal Returns { get; private set; }
+            }
         }
 
         [
-            Record(EraseFormats = "CUSTREC , SALESREC")
+            Record(EraseFormats = "CUSTREC, SALESREC")
         ]
         public class KEYS_Model : RecordModel
         {
