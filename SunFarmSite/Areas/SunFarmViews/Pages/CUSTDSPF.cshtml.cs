@@ -232,7 +232,7 @@ namespace ACME.SunFarm.SunFarmViews
             {
                 string result = "{";
 
-                result += $"category: \"Sales\", amount: 100.0";
+                result += $"category: \"Sales\", amount: {EncodeChartSalesAsJsArray()}";
 
                 return result + "}";
             }
@@ -241,10 +241,40 @@ namespace ACME.SunFarm.SunFarmViews
             {
                 string result = "{";
 
-                result += $"category: \"Returns\", amount: 50.0";
+                result += $"category: \"Returns\", amount: {EncodeChartReturnsAsJsArray()}";
 
                 return result + "}";
             }
+
+            private string EncodeChartSalesAsJsArray()
+            {
+                string result = "[";
+
+                foreach(var sale in ChartSales)
+                {
+                    result += $"{sale},";
+                }
+
+                result = result.TrimEnd(',');
+
+                return result + "]";
+            }
+
+            private string EncodeChartReturnsAsJsArray()
+            {
+                string result = "[";
+
+                foreach (var ret in ChartRetuns)
+                {
+                    result += $"{ret},";
+                }
+
+                result = result.TrimEnd(',');
+
+                return result + "]";
+            }
+
+
         }
 
         [
