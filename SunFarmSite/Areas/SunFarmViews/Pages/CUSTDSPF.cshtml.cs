@@ -190,7 +190,7 @@ namespace ACME.SunFarm.SunFarmViews
             private decimal[] ChartSales { get; set; } = new decimal[12];
             private decimal[] ChartRetuns { get; set; } = new decimal[12];
 
-            public string SalesReturnsChartData { get; private set; } = "[]";
+            public string SalesReturnsChartData { get; private set; } = "{}";
 
             public class SFL_SalesReturns_Model: SubfileRecordModel
             {
@@ -220,49 +220,32 @@ namespace ACME.SunFarm.SunFarmViews
                     ChartRetuns[i] = Math.Abs( SFL_SalesReturns[i].RETURNS );
                 }
 
-                SalesReturnsChartData = "[";
+                SalesReturnsChartData = "{";
 
-                SalesReturnsChartData += GetSalesDataSeries() + ",";
-                SalesReturnsChartData += GetReturnsDataSeries() + 
+                SalesReturnsChartData += $"year: {ChartYear},";
+                SalesReturnsChartData += $"sales: [{CommaSeparatedSales()}],";
+                SalesReturnsChartData += $"returns: [{CommaSeparatedReturns()}]";
 
-                "]";
+                SalesReturnsChartData += "}";
             }
 
-            private string GetSalesDataSeries()
+            private string CommaSeparatedSales()
             {
-                string result = "{";
+                string result = string.Empty;
 
-                result += $"category: \"Sales\", amount: {EncodeChartSalesAsJsArray()}";
-
-                return result + "}";
-            }
-
-            private string GetReturnsDataSeries()
-            {
-                string result = "{";
-
-                result += $"category: \"Returns\", amount: {EncodeChartReturnsAsJsArray()}";
-
-                return result + "}";
-            }
-
-            private string EncodeChartSalesAsJsArray()
-            {
-                string result = "[";
-
-                foreach(var sale in ChartSales)
+                foreach (var sale in ChartSales)
                 {
                     result += $"{sale},";
                 }
 
                 result = result.TrimEnd(',');
 
-                return result + "]";
+                return result;
             }
 
-            private string EncodeChartReturnsAsJsArray()
+            private string CommaSeparatedReturns()
             {
-                string result = "[";
+                string result = string.Empty;
 
                 foreach (var ret in ChartRetuns)
                 {
@@ -271,7 +254,7 @@ namespace ACME.SunFarm.SunFarmViews
 
                 result = result.TrimEnd(',');
 
-                return result + "]";
+                return result;
             }
 
 
