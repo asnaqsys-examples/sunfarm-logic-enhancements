@@ -3,7 +3,7 @@
     const chartEl = document.getElementById('sales-chart');
     if (chartEl) {
         // Use themes
-        am4core.useTheme(am4themes_animated);
+        // am4core.useTheme(am4themes_animated);
 
         // Create chart instance
         const chart = am4core.create(CHART_ID, am4charts.XYChart);
@@ -21,20 +21,22 @@
         dateAxis.endLocation = 0.5;
 
         valueAxis.dataFields.valueY = 'value';
-        valueAxis.title.text = '$';
+        valueAxis.title.text = 'Dollars';
 
         const salesSeries = chart.series.push(new am4charts.LineSeries());
         salesSeries.dataFields.dateX = 'date';
         salesSeries.dataFields.valueY = 'value';
         salesSeries.tensionX = 0.8;
-        salesSeries.bullets.push(new am4charts.CircleBullet());
+        const salesBullet = salesSeries.bullets.push(new am4charts.CircleBullet());
+        salesBullet.tooltipText = 'Sales {valueY}';
         salesSeries.stroke = am4core.color('rgb(0,255,0)');
 
         const returnsSeries = chart.series.push(new am4charts.LineSeries());
         returnsSeries.dataFields.dateX = 'date';
         returnsSeries.dataFields.valueY = 'value';
         returnsSeries.tensionX = 0.8;
-        returnsSeries.bullets.push(new am4charts.CircleBullet());
+        const returnsBullet = returnsSeries.bullets.push(new am4charts.CircleBullet());
+        returnsBullet.tooltipText = 'Returns {valueY}';
         returnsSeries.stroke = am4core.color('rgb(255,0,0)');
 
         salesSeries.data = [

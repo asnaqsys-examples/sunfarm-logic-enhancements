@@ -109,7 +109,7 @@
                 </div>
             </DdsRecord> @* CUSTREC *@
 
-            <DdsSubfileControl For="SALESREC" StretchConstantText=false KeyNames="F12 'Cancel';" ExcludeEmptyRows="6-20">
+            <DdsSubfileControl For="SALESREC" StretchConstantText=false KeyNames="F12 'Cancel';" ExcludeEmptyRows="6-24">
                 <span class="page-title">SunFarm Customer Sales/Returns</span>
 
                 <div Row="1">
@@ -126,8 +126,11 @@
                     <DdsConstant Col="2" Text="Customer Name" />
                     <DdsCharField Col="15" For="SALESREC.SFNAME" Color="DarkBlue" />
                 </div>
+                <div Row="5">
+                    <DdsConstant Col="1" Text="" />
+                </div>
                 @*
-                <div Row="5" RowSpan=12>
+                <div Row="6" RowSpan=12>
                     @for (int rrn = 0; rrn < Model.SALESREC.SFL_SalesReturns.Count; rrn++)
                     {
                         int row = 8 + rrn;
