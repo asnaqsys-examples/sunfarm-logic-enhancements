@@ -197,9 +197,6 @@ namespace ACME.SunFarm.SunFarmViews
                 [Dec(4, 0)]
                 public decimal YEAR { get; private set; }
 
-                [Char(3)]
-                public string MONTH { get; set; }
-
                 [Dec(11, 2)]
                 public decimal SALES { get; private set; }
 
