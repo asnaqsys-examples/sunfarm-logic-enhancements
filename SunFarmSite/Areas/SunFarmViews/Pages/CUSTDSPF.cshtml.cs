@@ -204,7 +204,7 @@ namespace ACME.SunFarm.SunFarmViews
                 public decimal RETURNS { get; private set; }
             }
 
-            public void PopulateChartData()
+            internal void PopulateChartData()
             {
                 if (SFL_SalesReturns.Count == 0)
                     return;

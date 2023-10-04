@@ -88,7 +88,7 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
     DclFld sflrrn            Type( *Packed  )    Len( 4,0 )
     DclFld TEMPNO            Type( *Packed  )    Len( 9,0 )
 
-    DclFld SalesSflrrn       Type( *Packed  )    Len( 4,0 )
+    DclFld SalesSflrrn       Like(sflrrn)
  
     // PLIST(s) relocated by Monarch
     DclPList #PLMSG
@@ -623,8 +623,8 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
     
     BegSr LoadSalesAndReturns
 
-        DclArray LastRecordedYearSales Type( *Packed  ) Len( 11 ,2 ) Dim(12)
-        DclArray LastRecordedYearReturns Type( *Packed  ) Len( 11 ,2 ) Dim(12)
+        DclArray LastRecordedYearSales Like(CSSALES01) Dim(12)
+        DclArray LastRecordedYearReturns Like(CSSALES01) Dim(12)
         DclFld LastRecordedYear Like(CSYEAR)
         
         CustChk()
@@ -635,9 +635,7 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
         *IN90 = "1" // Clear the subfile.
         Write SALESREC
 
-        *IN90 = "0" // Display records.
         SalesSflrrn = 0
-        
         LastRecordedYear = 0
         
         SetLL RCSMASTL1 Key(CMCUSTNO)
@@ -675,7 +673,6 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
         
         SetOff IndList( *IN76, *IN90 ) // Display records.
         Write SALESREC
-
     EndSr 
     
     BegSr WriteSalesReturnsSubfileRecord
