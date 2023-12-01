@@ -753,9 +753,9 @@ namespace ACME.SunFarm
 
             if (LastRecordedYear > 0m)
             {
-                for (month = 0; month <= (short)MonthsInYear; month++)
+                for (month = 1; month <= (short)MonthsInYear; month++)
                 {
-                    WriteSalesReturnsSubfileRecord(LastRecordedYear, LastRecordedYearSales[(int)month], LastRecordedYearReturns[(int)month]);
+                    WriteSalesReturnsSubfileRecord(LastRecordedYear, LastRecordedYearSales[(int)month-1], LastRecordedYearReturns[(int)month-1]);
                 }
             }
 
